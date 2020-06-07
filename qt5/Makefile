@@ -234,13 +234,6 @@ define Build/Prepare
 	$(CP) ./files/qplatformdefs.h $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qplatformdefs.h
 	$(CP) ./files/qmake.conf $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf
 	$(SED) 's@$$$$(TARGET_CROSS)@$(TARGET_CROSS)@g' $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf
-	if [ '$(CPU_TYPE)' == '24kc' ]; then \
-		$(SED) 's@$$$$(QMAKE_CFLAGS)@-EL -mips32r2 -mtune=24kc@g' $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf; \
-		$(SED) 's@$$$$(QMAKE_CXXFLAGS)@-EL -mips32r2 -mtune=24kc@g' $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf; \
-	else \
-		$(SED) 's@$$$$(QMAKE_CFLAGS)@@g' $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf; \
-		$(SED) 's@$$$$(QMAKE_CXXFLAGS)@@g' $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf; \
-	fi
 endef
 
 define Build/Configure
