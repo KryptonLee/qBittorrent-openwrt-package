@@ -16,5 +16,5 @@ You can see the qt5 library packages in `Libraries --> Qt5`, the rblibtorrent (l
 * At last, Build your own openwrt images and packages as usual.
 ## Tested platform:
 * x86 and x64
-* Newifi D2 (mips32_24kc)
-<br>Other platforms have not been tested. I am not sure qt5 could function properly on them, as some platforms need to add additional flags to `QMAKE_CFLAGS` and `QMAKE_CXXFLAGS` in files `qmake.conf`.
+* Newifi D2 (mipsel_24kc)
+<br>Other platforms have not been tested. I am not sure qt5 could function properly on them, as some platforms may need to add additional flags to `QMAKE_CFLAGS` and `QMAKE_CXXFLAGS` in files `qmake.conf`.
