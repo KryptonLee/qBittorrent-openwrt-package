@@ -1,15 +1,23 @@
+#
+# Copyright (C) 2020 Krypton Lee <jun.k.lee199410@outlook.com>
+#
+# This is free software, licensed under the GNU General Public License v2.
+# See /LICENSE for more information.
+#
+
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qBittorrent
-PKG_VERSION:=4.1.3
-PKG_RELEASE=1
+PKG_VERSION:=4.2.5
+PKG_RELEASE=0
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/qbittorrent/qBittorrent.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=a574c4a70a5a3293d2f6135952c301d930d23627
+PKG_SOURCE_VERSION:=2c65b796401f924d6889aadde958de3d2846bb4b
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
+PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>
 PKG_LICENSE:=GPL-2.0+
 PKG_LICENSE_FILES:=COPYING
 
@@ -23,9 +31,9 @@ define Package/qBittorrent
   SUBMENU:=BitTorrent
   SECTION:=net
   CATEGORY:=Network
-  TITLE:=bittorrent client programmed in C++ / Qt
+  TITLE:=BitTorrent Client Programmed in C++ / Qt
   URL:=https://www.qbittorrent.org/
-  DEPENDS:=+qt5-core +qt5-network +qt5-xml +rblibtorrent
+  DEPENDS:=+libQt5Core +libQt5Network +libQt5Xml +rblibtorrent
 endef
 
 define Package/qBittorrent/description
@@ -37,15 +45,16 @@ well as many features.
 endef
 
 CONFIGURE_VARS += \
-	QT_QMAKE="$(TOOLCHAIN_DIR)/bin" \
-	PKG_CONFIG_PATH="$(TOOLCHAIN_DIR)/lib/pkgconfig"
+	QT_QMAKE=$(STAGING_DIR_HOSTPKG)/bin \
+	QMAKE_LRELEASE=$(STAGING_DIR_HOSTPKG)/bin/lrelease \
+	PKG_CONFIG_PATH=$(STAGING_DIR)/usr/lib/pkgconfig
 
 CONFIGURE_ARGS += \
 	--disable-gui \
 	--with-boost=$(STAGING_DIR)/usr
 
 MAKE_VARS += \
-	INSTALL_ROOT="$(PKG_INSTALL_DIR)"
+	INSTALL_ROOT=$(PKG_INSTALL_DIR)
 
 define Package/qBittorrent/install
 	$(INSTALL_DIR) $(1)/usr/man/man1
