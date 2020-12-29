@@ -14,7 +14,44 @@ make menuconfig
 ```
 You can see the qt5 library packages in `Libraries --> Qt5`, the rblibtorrent (libtorrent-rasterbar) package in `Libraries --> rblibtorrent`, and the qBittorrent package in `Network --> BitTorrent --> qBittorrent`.
 * At last, Build your own openwrt images and packages as usual.
-## Tested platform:
-* x86 and x64
-* Newifi D2 (mipsel_24kc)
-<br>Other platforms have not been tested. I am not sure qt5 could function properly on them, as some platforms may need to add additional flags to `QMAKE_CFLAGS` and `QMAKE_CXXFLAGS` in files `qmake.conf`.
+
+
+## After start
+
+Fist you need create new user and user group:
+
+In file: /etc/passwd add string : qbittorrent:x:227:227:qbittorrent:/home/qbittorrent:/bin/false
+
+In file: /etc/group add string : qbittorrent:x:227:qbittorrent
+
+In file: /etc/shadow add string : qbittorrent:x:0:0:99999:7:::
+
+After that you need create home dir for user qbittorrent:
+
+mkdir /home
+mkdir /home/qbittorrent
+chown qbittorrent:qbittorrent /home/qbittorrent
+And then you need put this script to directory /etc/init.d
+
+#! /bin/sh /etc/rc.common
+USE_PROCD=1
+
+START=98
+STOP=01
+
+DAEMON="/usr/bin/qbittorrent-nox"
+USER="qbittorrent"
+GROUP="qbittorrent"
+
+start_service() {
+	procd_open_instance
+	procd_set_param command "$DAEMON"
+	procd_set_param user $USER
+	procd_set_param group $GROUP
+	procd_set_param env HOME=/home/qbittorrent
+	procd_close_instance
+}
+Allow execution:
+chmod 755 /etc/init.d/qbittorrent
+
+After run qBittorrent will appear on 8080 port. login:admin password:adminadmin.
