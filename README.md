@@ -20,19 +20,28 @@ You can see the qt5 library packages in `Libraries --> Qt5`, the rblibtorrent (l
 
 Fist you need create new user and user group:
 
-<code>In file: /etc/passwd add string : qbittorrent:x:227:227:qbittorrent:/home/qbittorrent:/bin/false
+In file: /etc/passwd add string : 
+```
+qbittorrent:x:227:227:qbittorrent:/home/qbittorrent:/bin/false
+```
 
-In file: /etc/group add string : qbittorrent:x:227:qbittorrent
-
-In file: /etc/shadow add string : qbittorrent:x:0:0:99999:7:::
+In file: /etc/group add string :
+```
+qbittorrent:x:227:qbittorrent
+```
+In file: /etc/shadow add string :
+```
+qbittorrent:x:0:0:99999:7:::
+```
 
 After that you need create home dir for user qbittorrent:
-
+```
 mkdir /home
 mkdir /home/qbittorrent
 chown qbittorrent:qbittorrent /home/qbittorrent
+```
 And then you need put this script to directory /etc/init.d
-
+```
 #! /bin/sh /etc/rc.common
 USE_PROCD=1
 
@@ -51,7 +60,10 @@ start_service() {
 	procd_set_param env HOME=/home/qbittorrent
 	procd_close_instance
 }
+```
 Allow execution:
+```
 chmod 755 /etc/init.d/qbittorrent
+```
 
 After run qBittorrent will appear on 8080 port. login:admin password:adminadmin.
