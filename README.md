@@ -20,11 +20,11 @@ You can see the qt5 library packages in `Libraries --> Qt5`, the rblibtorrent (l
 
 Fist you need create new user and user group:
 
-In file: /etc/passwd add string : <code>qbittorrent:x:227:227:qbittorrent:/home/qbittorrent:/bin/false<code>
+<code>In file: /etc/passwd add string : qbittorrent:x:227:227:qbittorrent:/home/qbittorrent:/bin/false
 
-In file: /etc/group add string : <code>qbittorrent:x:227:qbittorrent<code>
+In file: /etc/group add string : qbittorrent:x:227:qbittorrent
 
-In file: /etc/shadow add string : <code>qbittorrent:x:0:0:99999:7:::<code>
+In file: /etc/shadow add string : qbittorrent:x:0:0:99999:7:::
 
 After that you need create home dir for user qbittorrent:
 
