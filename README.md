@@ -4,7 +4,7 @@ Openwrt package Makefiles for qBittorrent and its dependencies (libtorrent-raste
 ## How to use:
 * Use `git` to clone the sources into your openwrt sources package directory (`OPENWRT_SRC_ROOT/package`):
 ```
-git clone https://github.com/KryptonLee/qBittorrent-openwrt-package.git OPENWRT_SRC_ROOT/package/<dir_name>
+git clone gitURL OPENWRT_SRC_ROOT/package/<dir_name>
 ```
 You can change <dir_name> to any directory name you like.
 * Select the packages in menuconfig:
