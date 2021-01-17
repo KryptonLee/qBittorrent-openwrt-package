@@ -34,6 +34,7 @@ define Package/qBittorrent
   TITLE:=BitTorrent Client Programmed in C++ / Qt
   URL:=https://www.qbittorrent.org/
   DEPENDS:=+libQt5Core +libQt5Network +libQt5Xml +rblibtorrent
+  USERID:=qbittorrent=227:qbittorrent=227
 endef
 
 define Package/qBittorrent/description
