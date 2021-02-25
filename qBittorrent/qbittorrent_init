@@ -1,0 +1,26 @@
+#! /bin/sh /etc/rc.common
+USE_PROCD=1
+
+START=98
+STOP=01
+
+DAEMON="/usr/bin/qbittorrent-nox"
+USER="qbittorrent"
+GROUP="qbittorrent"
+home_dir="/home/qbittorrent"
+
+start_service() {
+
+	[ -d "$home_dir" ] || {
+		mkdir -p "$home_dir"
+		chmod 0755 "$home_dir"
+		chown "$USER:$GROUP" "$home_dir"
+	}
+
+	procd_open_instance
+	procd_set_param command "$DAEMON"
+	procd_set_param user $USER
+	procd_set_param group $GROUP
+	procd_set_param env HOME="$home_dir"
+	procd_close_instance
+}

@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qBittorrent
-PKG_VERSION:=4.2.5
+PKG_VERSION:=4.3.3
 PKG_RELEASE=0
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/qbittorrent/qBittorrent.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=2c65b796401f924d6889aadde958de3d2846bb4b
+PKG_SOURCE_VERSION:=da0b276d5fc4582f40e6fc8f17883083d2662316
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>
@@ -34,6 +34,7 @@ define Package/qBittorrent
   TITLE:=BitTorrent Client Programmed in C++ / Qt
   URL:=https://www.qbittorrent.org/
   DEPENDS:=+libQt5Core +libQt5Network +libQt5Xml +rblibtorrent
+  USERID:=qbittorrent=227:qbittorrent=227
 endef
 
 define Package/qBittorrent/description
@@ -61,6 +62,8 @@ define Package/qBittorrent/install
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/man/man1/qbittorrent-nox.1 $(1)/usr/man/man1/qbittorrent-nox.1
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/qbittorrent-nox $(1)/usr/bin
+	$(INSTALL_DIR) $(1)/etc/init.d/
+	$(INSTALL_BIN) qbittorrent_init $(1)/etc/init.d/qbittorrent
 endef
 
 $(eval $(call BuildPackage,qBittorrent))
