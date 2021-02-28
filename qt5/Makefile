@@ -58,7 +58,7 @@ define Package/libQt5/config
 	endchoice
 
 	config qt5-optimize-size
-		depends on @qt5-variant-release
+		depends on qt5-variant-release
 		bool "Optimize Size"
 		help
 			Optimize release builds for size instead of speed.
@@ -66,7 +66,7 @@ define Package/libQt5/config
 		default n
 
 	config qt5-optimize-debug
-		depends on @qt5-variant-debug
+		depends on qt5-variant-debug
 		bool "Optimize Debug"
 		help
 			Enable debug-friendly optimizations in debug builds.
@@ -74,7 +74,7 @@ define Package/libQt5/config
 		default n
 
 	config qt5-optimized-tools
-		depends on @qt5-variant-debug
+		depends on qt5-variant-debug
 		bool "Optimized Tools"
 		help
 			Build optimized host tools even in debug build.
