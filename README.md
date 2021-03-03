@@ -7,6 +7,15 @@ Openwrt package Makefiles for qBittorrent and its dependencies (libtorrent-raste
 git clone https://github.com/KryptonLee/qBittorrent-openwrt-package.git OPENWRT_SRC_ROOT/package/<dir_name>
 ```
 You can change <dir_name> to any directory name you like.
+* List tag versions of this package:
+```
+cd OPENWRT_SRC_ROOT/package/<dir_name>
+git tag
+```
+And get the sources of the specified tag version:
+```
+git checkout tag_name
+```
 * Select the packages in menuconfig:
 ```
 cd OPENWRT_SRC_ROOT
