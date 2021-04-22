@@ -57,6 +57,7 @@ MAKE_VARS += \
 
 define Package/$(PKG_NAME)/conffiles
 /root/.config/qBittorrent
+endef
 
 define Package/qBittorrent/install
 	$(INSTALL_DIR) $(1)/usr/man/man1
