@@ -10,7 +10,7 @@ start_service()
 {
 	echo service qbittorrent start
 	procd_open_instance
-	procd_set_param command $PROG
+	procd_set_param command $PROG --profile="/root/.config"
 	procd_set_param respawn
 	procd_close_instance
 }
