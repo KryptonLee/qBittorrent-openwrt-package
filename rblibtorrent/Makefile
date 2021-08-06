@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rblibtorrent
-PKG_VERSION:=1.2.13
+PKG_VERSION:=1.2.14
 PKG_RELEASE=0
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/arvidn/libtorrent.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=e00a152678fbce7903aa42bbd93e8b812f171928
+PKG_SOURCE_VERSION:=33a10d5a723a6c27d9baee7d9bf2028eb81c88ed
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>

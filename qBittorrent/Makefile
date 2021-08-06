@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qBittorrent
-PKG_VERSION:=4.3.5
+PKG_VERSION:=4.3.7
 PKG_RELEASE=0
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/qbittorrent/qBittorrent.git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=063844ed44bffd3fbf2ac2792590ba47bf3fb78e
+PKG_SOURCE_VERSION:=0415c0c6f87d0093811f03c99d0e8cefe6945347
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>
