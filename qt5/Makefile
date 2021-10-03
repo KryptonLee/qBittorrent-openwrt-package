@@ -287,6 +287,36 @@ define Build/InstallDev
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib*.so* $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/pkgconfig/Qt5*.pc $(1)/usr/lib/pkgconfig/
+	$(INSTALL_DIR) $(1)/usr/lib/cmake/Qt5
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5/*.cmake $(1)/usr/lib/cmake/Qt5/
+	$(INSTALL_DIR) $(1)/usr/lib/cmake/Qt5AttributionsScannerTools
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5AttributionsScannerTools/*.cmake $(1)/usr/lib/cmake/Qt5AttributionsScannerTools/
+	$(INSTALL_DIR) $(1)/usr/lib/cmake/Qt5BootstrapDBus
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5BootstrapDBus/*.cmake $(1)/usr/lib/cmake/Qt5BootstrapDBus/
+	$(INSTALL_DIR) $(1)/usr/lib/cmake/Qt5Concurrent
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5Concurrent/*.cmake $(1)/usr/lib/cmake/Qt5Concurrent/
+	$(INSTALL_DIR) $(1)/usr/lib/cmake/Qt5Core
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5Core/*.cmake $(1)/usr/lib/cmake/Qt5Core/
+	$(INSTALL_DIR) $(1)/usr/lib/cmake/Qt5DBus
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5DBus/*.cmake $(1)/usr/lib/cmake/Qt5DBus/
+	$(INSTALL_DIR) $(1)/usr/lib/cmake/Qt5LinguistTools
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5LinguistTools/*.cmake $(1)/usr/lib/cmake/Qt5LinguistTools/
+	$(INSTALL_DIR) $(1)/usr/lib/cmake/Qt5Zlib
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5Zlib/*.cmake $(1)/usr/lib/cmake/Qt5Zlib/
+	$(INSTALL_DIR) $(1)/usr/lib/cmake/Qt5Sql
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5Sql/*.cmake $(1)/usr/lib/cmake/Qt5Sql/
+	$(INSTALL_DIR) $(1)/usr/lib/cmake/Qt5Test
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5Test/*.cmake $(1)/usr/lib/cmake/Qt5Test/
+	$(INSTALL_DIR) $(1)/usr/lib/cmake/Qt5Network
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5Network/*.cmake $(1)/usr/lib/cmake/Qt5Network/
+	$(INSTALL_DIR) $(1)/usr/lib/cmake/Qt5Xml
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5Xml/*.cmake $(1)/usr/lib/cmake/Qt5Xml/
+	$(INSTALL_DIR) $(1)/usr/plugins
+	$(INSTALL_DIR) $(1)/usr/plugins/bearer
+	$(CP) $(PKG_INSTALL_DIR)/usr/plugins/bearer/*.so $(1)/usr/plugins/bearer/
+	$(INSTALL_DIR) $(1)/usr/plugins/sqldrivers
+	$(CP) $(PKG_INSTALL_DIR)/usr/plugins/sqldrivers/*.so $(1)/usr/plugins/sqldrivers/
+
 endef
 
 define DefineQt5PackageInstall
