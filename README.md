@@ -3,7 +3,7 @@ Openwrt package Makefiles for qBittorrent and its dependencies (libtorrent-raste
 
 ## Warning
 
-During compilation will you have got error:
+During compilation you will have got error:
 ```
 CMake Error at /home/dmitriy/MyProk/openwrt/staging_dir/target-aarch64_cortex-a53_musl/usr/lib/cmake/Qt5Core/Qt5CoreConfig.cmake:14 (message):
   The imported target "Qt5::Core" references the file
