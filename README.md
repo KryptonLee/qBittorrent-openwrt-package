@@ -61,13 +61,13 @@ set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/../../../staging_dir
 
 5)usign -G -c 'openwrt test repo' -s key-build -p key-build.pub
 
-6)ln -s which usign staging_dir/host/bin/usign
+6)ln -s "which usign" staging_dir/host/bin/usign
 
 ## Execute in router:
 
 1)Copy .pub key to /etc/opkg/keys/ key need rename to signature ID in file Packages.sig
 
-2)file:///opt >> /etc/opkg/customfeeds.conf - Add local repository in folder /opt
+2)echo src/gz local file:///opt >> /etc/opkg/customfeeds.conf - Add local repository in folder /opt
 
 3)Move file from folder bin/packages/archetecture to folder opt on router
 
