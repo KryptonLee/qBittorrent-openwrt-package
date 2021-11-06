@@ -3,25 +3,11 @@ Openwrt package Makefiles for qBittorrent and its dependencies (libtorrent-raste
 
 ## Warning
 
-During compilation you will have got error:
-```
-CMake Error at /home/dmitriy/MyProk/openwrt/staging_dir/target-aarch64_cortex-a53_musl/usr/lib/cmake/Qt5Core/Qt5CoreConfig.cmake:14 (message):
-  The imported target "Qt5::Core" references the file
+You need install qt6 from there: https://www.qt.io/download-qt-installer
 
-     /home/dmitriy/MyProk/openwrt/staging_dir/target-aarch64_cortex-a53_musl/usr/../../../../../staging_dir/hostpkg//mkspecs/linux-openwrt-g++
-```
+And set option -DQT_HOST_PATH in file qt6/makefile and qBittorrent/makefile.
 
-You need open file: 
 
-openwrt/staging_dir/target-aarch64_cortex-a53_musl/usr/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
-
-And change:
-```
-set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/../../../../../staging_dir/hostpkg//mkspecs/linux-openwrt-g++")
-```
-to:
-```
-set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/../../../staging_dir/hostpkg//mkspecs/linux-openwrt-g++")
 ```
 ## How to use:
 

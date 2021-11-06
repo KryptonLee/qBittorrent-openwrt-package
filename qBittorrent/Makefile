@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2020 Krypton Lee <jun.k.lee199410@outlook.com>
+# Copyright (C) 2021 Pavlov Dmitriy
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,16 +8,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qBittorrent
-PKG_VERSION:=4.4.0beta3
+PKG_VERSION:=4.4.0rc1
 PKG_RELEASE=0
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/qbittorrent/qBittorrent/tar.gz/release-$(PKG_VERSION)?
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_HASH:=e7265ec7730b1f9daa2291fa135b2223986923ea3385ea060585f3e56486aa98
+PKG_HASH:=1cc48d0166e51a7f92ef6d25911970b277a244b6840ad8c7b07e6a22206d7803
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-release-$(PKG_VERSION)
 
-PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>
+PKG_MAINTAINER:=Pavlov Dmitriy
 PKG_LICENSE:=GPL-2.0+
 PKG_LICENSE_FILES:=COPYING
 
@@ -34,7 +34,7 @@ define Package/qBittorrent
   CATEGORY:=Network
   TITLE:=BitTorrent Client Programmed in C++ / Qt
   URL:=https://www.qbittorrent.org/
-  DEPENDS:=+libQt5Core +libQt5Network +libQt5Xml +libQt5Sql +boost +libtorrent-rasterbar
+  DEPENDS:=+libQt6Core +libQt6Network +libQt6Xml +libQt6Sql  +boost +libtorrent-rasterbar
   USERID:=qbittorrent=227:qbittorrent=227
 endef
 
@@ -47,11 +47,10 @@ well as many features.
 endef
 
 CMAKE_OPTIONS += \
+    -DQT_HOST_PATH=/home/dmitriy/Qt/6.2.1/gcc_64 \
     -DGUI=OFF \
-   -DSTACKTRACE=OFF \
-    -DLIBTINS_BUILD_EXAMPLES=OFF \
-	-DLIBTINS_BUILD_TESTS=OFF \
-    -DCMAKE_PREFIX_PATH=/home/dmitriy/MyProk/openwrt/staging_dir/target-aarch64_cortex-a53_musl/usr/lib/cmake/Qt5Core  \
+    -DQT6=ON \
+    -DSTACKTRACE=OFF \
     -DCMAKE_BUILD_TYPE="Release" \
     -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
 
