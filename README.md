@@ -21,7 +21,9 @@ And set option -DQT_HOST_PATH in file qt6/makefile and qBittorrent/makefile.
 
 5)cd package
 
-6)git clone https://github.com/Deema35/qBittorrent-openwrt-package.
+6)git clone https://github.com/Deema35/qBittorrent-openwrt-package.git qBittorrent
+
+6.1) cd ../
 
 7)make menuconfig - set architecture and board and pick qbittorrent. QBittorrent package in `Network --> BitTorrent --> qBittorrent`.
 
