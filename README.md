@@ -13,7 +13,7 @@ CMake Error at /home/dmitriy/MyProk/openwrt/staging_dir/target-aarch64_cortex-a5
 
 You need open file: 
 
-openwrt/staging_dir/target-aarch64_cortex-a53_musl/usr/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
+`openwrt/staging_dir/target-aarch64_cortex-a53_musl/usr/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake`
 
 And change:
 ```
