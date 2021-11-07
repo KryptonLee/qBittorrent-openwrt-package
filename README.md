@@ -16,13 +16,13 @@ You need open file:
 `openwrt/staging_dir/target-aarch64_cortex-a53_musl/usr/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake`
 
 And change:
-```
-set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/../../../../../staging_dir/hostpkg//mkspecs/linux-openwrt-g++")
-```
+
+`set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/../../../../../staging_dir/hostpkg//mkspecs/linux-openwrt-g++")`
+
 to:
-```
-set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/../../../staging_dir/hostpkg//mkspecs/linux-openwrt-g++")
-```
+
+`set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/../../../staging_dir/hostpkg//mkspecs/linux-openwrt-g++")`
+
 ## How to use:
 
 
