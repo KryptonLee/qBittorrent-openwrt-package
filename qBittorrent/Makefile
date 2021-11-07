@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qBittorrent
-PKG_VERSION:=4.4.0beta3
+PKG_VERSION:=4.4.0rc1
 PKG_RELEASE=0
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/qbittorrent/qBittorrent/tar.gz/release-$(PKG_VERSION)?
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_HASH:=e7265ec7730b1f9daa2291fa135b2223986923ea3385ea060585f3e56486aa98
+PKG_HASH:=1cc48d0166e51a7f92ef6d25911970b277a244b6840ad8c7b07e6a22206d7803
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-release-$(PKG_VERSION)
 
 PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>
@@ -48,10 +48,9 @@ endef
 
 CMAKE_OPTIONS += \
     -DGUI=OFF \
-   -DSTACKTRACE=OFF \
+    -DSTACKTRACE=OFF \
     -DLIBTINS_BUILD_EXAMPLES=OFF \
 	-DLIBTINS_BUILD_TESTS=OFF \
-    -DCMAKE_PREFIX_PATH=/home/dmitriy/MyProk/openwrt/staging_dir/target-aarch64_cortex-a53_musl/usr/lib/cmake/Qt5Core  \
     -DCMAKE_BUILD_TYPE="Release" \
     -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
 
