@@ -23,8 +23,13 @@ to:
 
 `set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/../../../staging_dir/hostpkg//mkspecs/linux-openwrt-g++")`
 
-## How to use:
+# Requirements
 
+`binutils bzip2 diff find flex gawk gcc-6+ getopt grep install libc-dev libz-dev make4.1+ perl python3.6+ rsync subversion unzip which`
+
+[Build System Setup](https://openwrt.org/docs/guide-developer/build-system/install-buildsystem)
+
+## How to use:
 
 1)`git clone https://github.com/openwrt/openwrt.git`
 
