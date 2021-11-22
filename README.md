@@ -23,7 +23,7 @@ to:
 
 `set(_qt5_corelib_extra_includes "${_qt5Core_install_prefix}/../../../staging_dir/hostpkg//mkspecs/linux-openwrt-g++")`
 
-# Requirements
+## Requirements
 
 `binutils bzip2 diff find flex gawk gcc-6+ getopt grep install libc-dev libz-dev make4.1+ perl python3.6+ rsync subversion unzip which`
 
