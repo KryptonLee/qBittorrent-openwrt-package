@@ -10,7 +10,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=qt5
 PKG_VERSION:=5.15
 PKG_SUBVERSION:=2
-PKG_RELEASE:=0
+PKG_RELEASE:=1
 
 PKG_MD5SUM:=e1447db4f06c841d8947f0a6ce83a7b5
 PKG_SOURCE:=qt-everywhere-src-$(PKG_VERSION).$(PKG_SUBVERSION).tar.xz
@@ -287,6 +287,11 @@ define Build/InstallDev
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib*.so* $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/pkgconfig/Qt5*.pc $(1)/usr/lib/pkgconfig/
+	$(INSTALL_DIR) $(1)/usr/lib/cmake
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5* $(1)/usr/lib/cmake/
+	$(SED) 's@/../../../../../@/../../../@g' $(1)/usr/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
+	$(INSTALL_DIR) $(1)/usr/plugins
+	$(CP) $(PKG_INSTALL_DIR)/usr/plugins/* $(1)/usr/plugins/
 endef
 
 define DefineQt5PackageInstall
