@@ -2,9 +2,10 @@
 Openwrt package Makefiles for qBittorrent and its dependencies (libtorrent-rasterbar and qt5, libtorrent-rasterbar is named as rblibtorrent).
 
 ## branch introduction:
-* `master`always keeps qBittorent and libtorrent-rasterbar up to date, but usually works on the latest release version of openwrt.
+* `master` uses libtorrent-rasterbar in openwrt feeds of master branch and always keeps qBittorent up to date as soon as possible, but usually only works on the master branch of openwrt.
+* `for-openwrt-21.02` uses the libtorrent-rasterbar package named as rblibtorrent rather than the libtorrent-rasterbar package in openwrt 21.02 feeds, as the version of the latter one stays at v2.0.1, which doesn't support qBittorrent v4.4.0 and above.
 * `for-openwrt-19.07` uses libtorrent-rasterbar v1.2.X series, as the cmake version in openwrt 19.07 is too old to compile libtorrent-rasterbar v2.0.X.
-* `for-openwrt-18.06` use qBittorrent v4.3.1, libtorrent-rasterbar v1.2.12 and qt5 v5.14.2 as the final version that openwrt 18.06 can support.
+* `for-openwrt-18.06` uses qBittorrent v4.3.1, libtorrent-rasterbar v1.2.12 and qt5 v5.14.2 as the final version that openwrt 18.06 can support.
 
 ## How to build:
 * Use `git` to clone the sources into your openwrt sources package directory (`OPENWRT_SRC_ROOT/package`):
