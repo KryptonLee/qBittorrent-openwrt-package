@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rblibtorrent
-PKG_VERSION:=1.2.15
+PKG_VERSION:=2.0.5
 PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/arvidn/libtorrent/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=15b41c319955bb4df4be34458b04c483b7b0dbc366a3ac43511d2ca989600d05
+PKG_HASH:=8879d233d81b9bc1b02fdac35f6e1f69509c74da9818c6a819d18b5e42983f56
 PKG_BUILD_DIR:=$(BUILD_DIR)/libtorrent-$(PKG_VERSION)
 
 PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>
@@ -40,6 +40,24 @@ define Package/rblibtorrent/description
 Rasterbar libtorrent is a C++ library that aims to be a good alternative to
 all the other bittorrent implementations around. It is a library and not a
 full featured client, although it comes with a working example client.
+endef
+
+TRY_SIGNAL_VERSION:=334fd139e2bb387017b42d36753a03935e3bca75
+TRY_SIGNAL_FILE:=$(PKG_NAME)-try_signal-$(TRY_SIGNAL_VERSION).tar.xz
+define Download/try_signal
+	VERSION:=$(TRY_SIGNAL_VERSION)
+	SUBDIR:=deps/try_signal
+	FILE:=$(TRY_SIGNAL_FILE)
+	URL:=https://github.com/arvidn/try_signal.git
+	MIRROR_HASH:=4e7a16dc64e4ad9b25c9358b6dc00117920d16f034858b4c2cab2d31ae066d21
+	PROTO:=git
+endef
+
+$(eval $(call Download,try_signal))
+
+define Build/Prepare
+	$(Build/Prepare/Default)
+	xzcat $(DL_DIR)/$(TRY_SIGNAL_FILE) | tar -C $(PKG_BUILD_DIR) $(TAR_OPTIONS)
 endef
 
 define Build/InstallDev
