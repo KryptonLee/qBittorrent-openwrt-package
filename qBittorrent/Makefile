@@ -33,7 +33,7 @@ define Package/qBittorrent
   CATEGORY:=Network
   TITLE:=BitTorrent Client Programmed in C++ / Qt
   URL:=https://www.qbittorrent.org/
-  DEPENDS:=+libQt5Core +libQt5Network +libQt5Sql +libQt5Xml +rblibtorrent
+  DEPENDS:=+boost +boost-system +libQt5Core +libQt5Network +libQt5Sql +libQt5Xml +libtorrent-rasterbar
 endef
 
 define Package/qBittorrent/description
