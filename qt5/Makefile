@@ -216,6 +216,7 @@ CONFIGURE_ARGS:= \
 	-skip androidextras \
 	-skip datavis3d \
 	-skip doc \
+	-skip imageformats \
 	-skip macextras \
 	-skip quick3d \
 	-skip quickcontrols \
@@ -226,6 +227,23 @@ CONFIGURE_ARGS:= \
 	-skip webglplugin \
 	-skip winextras \
 	-skip x11extras \
+	-no-zstd \
+	-no-iconv \
+	-no-feature-assistant \
+	-no-feature-designer \
+	-no-feature-distancefieldgenerator \
+	-no-feature-kmap2qmap \
+	-no-feature-macdeployqt \
+	-no-feature-makeqpf \
+	-no-feature-pixeltool \
+	-no-feature-qdbus \
+	-no-feature-qev \
+	-no-feature-qtattributionsscanner \
+	-no-feature-qtdiag \
+	-no-feature-qtpaths \
+	-no-feature-qtplugininfo \
+	-no-feature-windeployqt \
+	-no-feature-winrtrunner \
 	-v
 
 define Build/Prepare
@@ -248,9 +266,12 @@ define Build/Configure
 		$(if $(CONFIG_PACKAGE_libQt5Bluetooth),,$(if $(CONFIG_PACKAGE_libQt5Nfc),,-skip connectivity)) \
 		$(if $(CONFIG_PACKAGE_libQt5Bodymovin),,-skip lottie) \
 		$(if $(CONFIG_PACKAGE_libQt5Charts),,-skip charts) \
+		$(if $(CONFIG_PACKAGE_libQt5Concurrent),,-no-feature-concurrent) \
+		$(if $(CONFIG_PACKAGE_libQt5DBus),,-no-dbus) \
 		$(if $(CONFIG_PACKAGE_libQt5Gamepad),,-skip gamepad) \
 		$(if $(CONFIG_PACKAGE_libQt5Gui),-no-opengl,-no-gui) \
 		$(if $(CONFIG_PACKAGE_libQt5Multimedia),,-skip multimedia) \
+		$(if $(CONFIG_PACKAGE_libQt5Network),,-no-feature-network) \
 		$(if $(CONFIG_PACKAGE_libQt5NetworkAuth),,-skip networkauth) \
 		$(if $(CONFIG_PACKAGE_libQt5Positioning),,-skip location) \
 		$(if $(CONFIG_PACKAGE_libQt5Purchasing),,-skip purchasing) \
@@ -262,13 +283,16 @@ define Build/Configure
 		$(if $(CONFIG_PACKAGE_libQt5Sensors),,-skip sensors) \
 		$(if $(CONFIG_PACKAGE_libQt5SerialBus),,-skip serialbus) \
 		$(if $(CONFIG_PACKAGE_libQt5SerialPort),,-skip serialport) \
+		$(if $(CONFIG_PACKAGE_libQt5Sql),,-no-feature-sql) \
 		$(if $(CONFIG_PACKAGE_libQt5Svg),,-skip svg) \
+		$(if $(CONFIG_PACKAGE_libQt5Test),,-no-feature-testlib) \
 		$(if $(CONFIG_PACKAGE_libQt5TextToSpeech),,-skip speech) \
 		$(if $(CONFIG_PACKAGE_libQt5VirtualKeyboard),,-skip virtualkeyboard) \
 		$(if $(CONFIG_PACKAGE_libQt5WebChannel),,-skip webchannel) \
 		$(if $(CONFIG_PACKAGE_libQt5WebSockets),,-skip websockets) \
 		$(if $(CONFIG_PACKAGE_libQt5WebView),,-skip webview) \
 		$(if $(CONFIG_PACKAGE_libQt5Widgets),,-no-widgets) \
+		$(if $(CONFIG_PACKAGE_libQt5Xml),,-no-feature-xml) \
 		$(if $(CONFIG_PACKAGE_libQt5XmlPatterns),,-skip xmlpatterns) \
 	)
 endef
