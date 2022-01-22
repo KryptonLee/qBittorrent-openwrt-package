@@ -1,0 +1,10 @@
+--- a/qtdeclarative/src/qmldebug/qqmlprofilerevent_p.h
++++ b/qtdeclarative/src/qmldebug/qqmlprofilerevent_p.h
+@@ -46,6 +46,7 @@
+ #include <QtCore/qbytearray.h>
+ #include <QtCore/qvarlengtharray.h>
+ #include <QtCore/qmetatype.h>
++#include <limits>
+ 
+ #include <initializer_list>
+ #include <type_traits>
