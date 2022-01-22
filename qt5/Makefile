@@ -15,7 +15,7 @@ PKG_RELEASE:=1
 PKG_MD5SUM:=e1447db4f06c841d8947f0a6ce83a7b5
 PKG_SOURCE:=qt-everywhere-src-$(PKG_VERSION).$(PKG_SUBVERSION).tar.xz
 PKG_SOURCE_URL:=http://download.qt-project.org/archive/qt/$(PKG_VERSION)/$(PKG_VERSION).$(PKG_SUBVERSION)/single
-PKG_BUILD_DIR=$(BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_SUBVERSION)
+PKG_BUILD_DIR:=$(BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_SUBVERSION)
 
 PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>
 PKG_LICENSE:=LGPL-2.1
@@ -33,7 +33,7 @@ define Package/libQt5/Default
   SUBMENU:=Qt5
   TITLE:=Qt5
   URL:=http://qt-project.org
-  DEPENDS:=+libatomic +libpthread +librt +libstdcpp +libzstd +zlib @!LINUX_2_6
+  DEPENDS:=+libstdcpp +zlib
 endef
 
 define Package/libQt5
@@ -125,9 +125,9 @@ endef
 $(eval $(call DefineQt5Package,Bluetooth,Core,y,y))
 $(eval $(call DefineQt5Package,Bodymovin,Gui,y,y))
 $(eval $(call DefineQt5Package,Charts,Widgets,y,y))
-$(eval $(call DefineQt5Package,Concurrent,Core))
+$(eval $(call DefineQt5Package,Concurrent,Core,y,y))
 $(eval $(call DefineQt5Package,Core,))
-$(eval $(call DefineQt5Package,DBus,Core))
+$(eval $(call DefineQt5Package,DBus,Core,y,y))
 $(eval $(call DefineQt5Package,Gamepad,Gui,y,y))
 $(eval $(call DefineQt5Package,Gui,Core,y,y))
 $(eval $(call DefineQt5Package,Help,Network Sql Widgets))
@@ -135,7 +135,7 @@ $(eval $(call DefineQt5Package,Location,PositioningQuick))
 $(eval $(call DefineQt5Package,Multimedia,Gui Network,y,y))
 $(eval $(call DefineQt5Package,MultimediaQuick,Multimedia Quick))
 $(eval $(call DefineQt5Package,MultimediaWidgets,Multimedia Widgets))
-$(eval $(call DefineQt5Package,Network,Core))
+$(eval $(call DefineQt5Package,Network,Core,y,y))
 $(eval $(call DefineQt5Package,NetworkAuth,Network,y,y))
 $(eval $(call DefineQt5Package,Nfc,DBus,y,y))
 $(eval $(call DefineQt5Package,Positioning,Core,y,y))
@@ -158,16 +158,16 @@ $(eval $(call DefineQt5Package,Scxml,Qml,y,y))
 $(eval $(call DefineQt5Package,Sensors,Core,y,y))
 $(eval $(call DefineQt5Package,SerialBus,Network SerialPort,y,y))
 $(eval $(call DefineQt5Package,SerialPort,Core,y,y))
-$(eval $(call DefineQt5Package,Sql,Core))
+$(eval $(call DefineQt5Package,Sql,Core,y,y))
 $(eval $(call DefineQt5Package,Svg,Widgets,y,y))
-$(eval $(call DefineQt5Package,Test,Core))
+$(eval $(call DefineQt5Package,Test,Core,y,y))
 $(eval $(call DefineQt5Package,TextToSpeech,Core,y,y))
 $(eval $(call DefineQt5Package,VirtualKeyboard,Quick,y,y))
 $(eval $(call DefineQt5Package,WebChannel,Qml,y,y))
 $(eval $(call DefineQt5Package,WebSockets,Network,y,y))
 $(eval $(call DefineQt5Package,WebView,Quick,y,y))
 $(eval $(call DefineQt5Package,Widgets,Gui,y,y))
-$(eval $(call DefineQt5Package,Xml,Core))
+$(eval $(call DefineQt5Package,Xml,Core,y,y))
 $(eval $(call DefineQt5Package,XmlPatterns,Network,y,y))
 
 # 1: plugin name
@@ -210,7 +210,9 @@ CONFIGURE_ARGS:= \
 	-confirm-license \
 	-make libs \
 	-shared \
-	-no-opengl \
+	-no-iconv \
+	-no-zstd \
+	-system-zlib \
 	-skip 3d \
 	-skip activeqt \
 	-skip androidextras \
@@ -227,8 +229,6 @@ CONFIGURE_ARGS:= \
 	-skip webglplugin \
 	-skip winextras \
 	-skip x11extras \
-	-no-zstd \
-	-no-iconv \
 	-no-feature-assistant \
 	-no-feature-designer \
 	-no-feature-distancefieldgenerator \
@@ -305,7 +305,7 @@ define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include
 	$(CP) $(PKG_INSTALL_DIR)/usr/include/Qt* $(1)/usr/include/
 	$(INSTALL_DIR) $(1)/usr/lib
-	if [ $$(ls lib*.a | wc -l) != 0 ]; then \
+	if [ $(shell find $(PKG_INSTALL_DIR)/usr/lib/ -name lib*.a | wc -l) != 0 ]; then \
 		$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib*.a $(1)/usr/lib/; \
 	fi
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib*.so* $(1)/usr/lib/
@@ -314,8 +314,10 @@ define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/lib/cmake
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5* $(1)/usr/lib/cmake/
 	$(SED) 's@/../../../../../@/../../../@g' $(1)/usr/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
-	$(INSTALL_DIR) $(1)/usr/plugins
-	$(CP) $(PKG_INSTALL_DIR)/usr/plugins/* $(1)/usr/plugins/
+	if [ -d $(PKG_INSTALL_DIR)/usr/plugins ]; then \
+		$(INSTALL_DIR) $(1)/usr/plugins; \
+		$(CP) $(PKG_INSTALL_DIR)/usr/plugins/* $(1)/usr/plugins/; \
+	fi
 endef
 
 define DefineQt5PackageInstall
