@@ -130,7 +130,7 @@ $(eval $(call DefineQt5Package,Core,))
 $(eval $(call DefineQt5Package,DBus,Core,y,y))
 $(eval $(call DefineQt5Package,Gamepad,Gui,y,y))
 $(eval $(call DefineQt5Package,Gui,Core,y,y))
-$(eval $(call DefineQt5Package,Help,Network Sql Widgets))
+$(eval $(call DefineQt5Package,Help,Network Sql Widgets,y,y))
 $(eval $(call DefineQt5Package,Location,PositioningQuick))
 $(eval $(call DefineQt5Package,Multimedia,Gui Network,y,y))
 $(eval $(call DefineQt5Package,MultimediaQuick,Multimedia Quick))
@@ -229,7 +229,6 @@ CONFIGURE_ARGS:= \
 	-skip webglplugin \
 	-skip winextras \
 	-skip x11extras \
-	-no-feature-assistant \
 	-no-feature-designer \
 	-no-feature-distancefieldgenerator \
 	-no-feature-kmap2qmap \
@@ -270,6 +269,7 @@ define Build/Configure
 		$(if $(CONFIG_PACKAGE_libQt5DBus),,-no-dbus) \
 		$(if $(CONFIG_PACKAGE_libQt5Gamepad),,-skip gamepad) \
 		$(if $(CONFIG_PACKAGE_libQt5Gui),-no-opengl,-no-gui) \
+		$(if $(CONFIG_PACKAGE_libQt5Help),,-no-feature-assistant) \
 		$(if $(CONFIG_PACKAGE_libQt5Multimedia),,-skip multimedia) \
 		$(if $(CONFIG_PACKAGE_libQt5Network),,-no-feature-network) \
 		$(if $(CONFIG_PACKAGE_libQt5NetworkAuth),,-skip networkauth) \
