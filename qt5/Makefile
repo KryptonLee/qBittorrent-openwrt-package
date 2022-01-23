@@ -10,12 +10,12 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=qt5
 PKG_VERSION:=5.15
 PKG_SUBVERSION:=2
-PKG_RELEASE:=0
+PKG_RELEASE:=1
 
 PKG_MD5SUM:=e1447db4f06c841d8947f0a6ce83a7b5
 PKG_SOURCE:=qt-everywhere-src-$(PKG_VERSION).$(PKG_SUBVERSION).tar.xz
 PKG_SOURCE_URL:=http://download.qt-project.org/archive/qt/$(PKG_VERSION)/$(PKG_VERSION).$(PKG_SUBVERSION)/single
-PKG_BUILD_DIR=$(BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_SUBVERSION)
+PKG_BUILD_DIR:=$(BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_SUBVERSION)
 
 PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>
 PKG_LICENSE:=LGPL-2.1
@@ -33,7 +33,7 @@ define Package/libQt5/Default
   SUBMENU:=Qt5
   TITLE:=Qt5
   URL:=http://qt-project.org
-  DEPENDS:=+libatomic +libpthread +librt +libstdcpp +libzstd +zlib @!LINUX_2_6
+  DEPENDS:=+libstdcpp +zlib
 endef
 
 define Package/libQt5
@@ -125,17 +125,17 @@ endef
 $(eval $(call DefineQt5Package,Bluetooth,Core,y,y))
 $(eval $(call DefineQt5Package,Bodymovin,Gui,y,y))
 $(eval $(call DefineQt5Package,Charts,Widgets,y,y))
-$(eval $(call DefineQt5Package,Concurrent,Core))
+$(eval $(call DefineQt5Package,Concurrent,Core,y,y))
 $(eval $(call DefineQt5Package,Core,))
-$(eval $(call DefineQt5Package,DBus,Core))
+$(eval $(call DefineQt5Package,DBus,Core,y,y))
 $(eval $(call DefineQt5Package,Gamepad,Gui,y,y))
 $(eval $(call DefineQt5Package,Gui,Core,y,y))
-$(eval $(call DefineQt5Package,Help,Network Sql Widgets))
+$(eval $(call DefineQt5Package,Help,Network Sql Widgets,y,y))
 $(eval $(call DefineQt5Package,Location,PositioningQuick))
 $(eval $(call DefineQt5Package,Multimedia,Gui Network,y,y))
 $(eval $(call DefineQt5Package,MultimediaQuick,Multimedia Quick))
 $(eval $(call DefineQt5Package,MultimediaWidgets,Multimedia Widgets))
-$(eval $(call DefineQt5Package,Network,Core))
+$(eval $(call DefineQt5Package,Network,Core,y,y))
 $(eval $(call DefineQt5Package,NetworkAuth,Network,y,y))
 $(eval $(call DefineQt5Package,Nfc,DBus,y,y))
 $(eval $(call DefineQt5Package,Positioning,Core,y,y))
@@ -158,16 +158,16 @@ $(eval $(call DefineQt5Package,Scxml,Qml,y,y))
 $(eval $(call DefineQt5Package,Sensors,Core,y,y))
 $(eval $(call DefineQt5Package,SerialBus,Network SerialPort,y,y))
 $(eval $(call DefineQt5Package,SerialPort,Core,y,y))
-$(eval $(call DefineQt5Package,Sql,Core))
+$(eval $(call DefineQt5Package,Sql,Core,y,y))
 $(eval $(call DefineQt5Package,Svg,Widgets,y,y))
-$(eval $(call DefineQt5Package,Test,Core))
+$(eval $(call DefineQt5Package,Test,Core,y,y))
 $(eval $(call DefineQt5Package,TextToSpeech,Core,y,y))
 $(eval $(call DefineQt5Package,VirtualKeyboard,Quick,y,y))
 $(eval $(call DefineQt5Package,WebChannel,Qml,y,y))
 $(eval $(call DefineQt5Package,WebSockets,Network,y,y))
 $(eval $(call DefineQt5Package,WebView,Quick,y,y))
 $(eval $(call DefineQt5Package,Widgets,Gui,y,y))
-$(eval $(call DefineQt5Package,Xml,Core))
+$(eval $(call DefineQt5Package,Xml,Core,y,y))
 $(eval $(call DefineQt5Package,XmlPatterns,Network,y,y))
 
 # 1: plugin name
@@ -210,12 +210,16 @@ CONFIGURE_ARGS:= \
 	-confirm-license \
 	-make libs \
 	-shared \
-	-no-opengl \
+	-strip \
+	-no-iconv \
+	-no-zstd \
+	-system-zlib \
 	-skip 3d \
 	-skip activeqt \
 	-skip androidextras \
 	-skip datavis3d \
 	-skip doc \
+	-skip imageformats \
 	-skip macextras \
 	-skip quick3d \
 	-skip quickcontrols \
@@ -226,6 +230,20 @@ CONFIGURE_ARGS:= \
 	-skip webglplugin \
 	-skip winextras \
 	-skip x11extras \
+	-no-feature-designer \
+	-no-feature-distancefieldgenerator \
+	-no-feature-kmap2qmap \
+	-no-feature-macdeployqt \
+	-no-feature-makeqpf \
+	-no-feature-pixeltool \
+	-no-feature-qdbus \
+	-no-feature-qev \
+	-no-feature-qtattributionsscanner \
+	-no-feature-qtdiag \
+	-no-feature-qtpaths \
+	-no-feature-qtplugininfo \
+	-no-feature-windeployqt \
+	-no-feature-winrtrunner \
 	-v
 
 define Build/Prepare
@@ -248,9 +266,13 @@ define Build/Configure
 		$(if $(CONFIG_PACKAGE_libQt5Bluetooth),,$(if $(CONFIG_PACKAGE_libQt5Nfc),,-skip connectivity)) \
 		$(if $(CONFIG_PACKAGE_libQt5Bodymovin),,-skip lottie) \
 		$(if $(CONFIG_PACKAGE_libQt5Charts),,-skip charts) \
+		$(if $(CONFIG_PACKAGE_libQt5Concurrent),,-no-feature-concurrent) \
+		$(if $(CONFIG_PACKAGE_libQt5DBus),,-no-dbus) \
 		$(if $(CONFIG_PACKAGE_libQt5Gamepad),,-skip gamepad) \
 		$(if $(CONFIG_PACKAGE_libQt5Gui),-no-opengl,-no-gui) \
+		$(if $(CONFIG_PACKAGE_libQt5Help),,-no-feature-assistant) \
 		$(if $(CONFIG_PACKAGE_libQt5Multimedia),,-skip multimedia) \
+		$(if $(CONFIG_PACKAGE_libQt5Network),,-no-feature-network) \
 		$(if $(CONFIG_PACKAGE_libQt5NetworkAuth),,-skip networkauth) \
 		$(if $(CONFIG_PACKAGE_libQt5Positioning),,-skip location) \
 		$(if $(CONFIG_PACKAGE_libQt5Purchasing),,-skip purchasing) \
@@ -262,13 +284,16 @@ define Build/Configure
 		$(if $(CONFIG_PACKAGE_libQt5Sensors),,-skip sensors) \
 		$(if $(CONFIG_PACKAGE_libQt5SerialBus),,-skip serialbus) \
 		$(if $(CONFIG_PACKAGE_libQt5SerialPort),,-skip serialport) \
+		$(if $(CONFIG_PACKAGE_libQt5Sql),,-no-feature-sql) \
 		$(if $(CONFIG_PACKAGE_libQt5Svg),,-skip svg) \
+		$(if $(CONFIG_PACKAGE_libQt5Test),,-no-feature-testlib) \
 		$(if $(CONFIG_PACKAGE_libQt5TextToSpeech),,-skip speech) \
 		$(if $(CONFIG_PACKAGE_libQt5VirtualKeyboard),,-skip virtualkeyboard) \
 		$(if $(CONFIG_PACKAGE_libQt5WebChannel),,-skip webchannel) \
 		$(if $(CONFIG_PACKAGE_libQt5WebSockets),,-skip websockets) \
 		$(if $(CONFIG_PACKAGE_libQt5WebView),,-skip webview) \
 		$(if $(CONFIG_PACKAGE_libQt5Widgets),,-no-widgets) \
+		$(if $(CONFIG_PACKAGE_libQt5Xml),,-no-feature-xml) \
 		$(if $(CONFIG_PACKAGE_libQt5XmlPatterns),,-skip xmlpatterns) \
 	)
 endef
@@ -281,12 +306,19 @@ define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include
 	$(CP) $(PKG_INSTALL_DIR)/usr/include/Qt* $(1)/usr/include/
 	$(INSTALL_DIR) $(1)/usr/lib
-	if [ $$(ls lib*.a | wc -l) != 0 ]; then \
+	if [ $(shell find $(PKG_INSTALL_DIR)/usr/lib/ -name lib*.a | wc -l) != 0 ]; then \
 		$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib*.a $(1)/usr/lib/; \
 	fi
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib*.so* $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/pkgconfig/Qt5*.pc $(1)/usr/lib/pkgconfig/
+	$(INSTALL_DIR) $(1)/usr/lib/cmake
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cmake/Qt5* $(1)/usr/lib/cmake/
+	$(SED) 's@/../../../../../@/../../../@g' $(1)/usr/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake
+	if [ -d $(PKG_INSTALL_DIR)/usr/plugins ]; then \
+		$(INSTALL_DIR) $(1)/usr/plugins; \
+		$(CP) $(PKG_INSTALL_DIR)/usr/plugins/* $(1)/usr/plugins/; \
+	fi
 endef
 
 define DefineQt5PackageInstall
