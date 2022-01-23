@@ -210,6 +210,7 @@ CONFIGURE_ARGS:= \
 	-confirm-license \
 	-make libs \
 	-shared \
+	-strip \
 	-no-iconv \
 	-no-zstd \
 	-system-zlib \
