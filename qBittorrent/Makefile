@@ -20,6 +20,7 @@ PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>
 PKG_LICENSE:=GPL-2.0+
 PKG_LICENSE_FILES:=COPYING
 
+PKG_BUILD_DEPENDS:=qt5tools
 PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
 PKG_USE_MIPS16:=0
@@ -28,12 +29,12 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
 define Package/qBittorrent
-  SUBMENU:=BitTorrent
   SECTION:=net
   CATEGORY:=Network
+  SUBMENU:=BitTorrent
   TITLE:=BitTorrent Client Programmed in C++ / Qt
   URL:=https://www.qbittorrent.org/
-  DEPENDS:=+boost +boost-system +libQt5Core +libQt5Network +libQt5Sql +libQt5Xml +libtorrent-rasterbar
+  DEPENDS:=+libQt5Core +libQt5Network +libQt5Sql +libQt5Xml +libtorrent-rasterbar
 endef
 
 define Package/qBittorrent/description
