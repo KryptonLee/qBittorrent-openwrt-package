@@ -32,7 +32,7 @@ define Package/rblibtorrent
   CATEGORY:=Libraries
   TITLE:=Rasterbar BitTorrent Library
   URL:=https://www.libtorrent.org/
-  DEPENDS:=+boost +boost-system +boost-chrono +boost-random +libopenssl +libstdcpp
+  DEPENDS:=+boost-system +libatomic +libopenssl
   MAINTAINER:=Arvid Norberg <arvid@libtorrent.org>
 endef
 
