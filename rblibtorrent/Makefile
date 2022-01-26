@@ -31,7 +31,7 @@ define Package/rblibtorrent
   CATEGORY:=Libraries
   TITLE:=Rasterbar BitTorrent Library
   URL:=https://www.libtorrent.org/
-  DEPENDS:=+boost +boost-system +boost-chrono +boost-random +libopenssl +libstdcpp
+  DEPENDS:=+boost-system +libatomic +libopenssl
   MAINTAINER:=Arvid Norberg <arvid@libtorrent.org>
 endef
 
@@ -40,10 +40,6 @@ Rasterbar libtorrent is a C++ library that aims to be a good alternative to
 all the other bittorrent implementations around. It is a library and not a
 full featured client, although it comes with a working example client.
 endef
-
-TARGET_CFLAGS += $(if $(CONFIG_SOFT_FLOAT),-DBOOST_NO_FENV_H) -fPIC
-
-EXTRA_CXXFLAGS += $(if $(CONFIG_GCC_VERSION_4_8),-std=gnu++11,-std=gnu++14)
 
 TARGET_LDFLAGS += -lstdc++
 
