@@ -28,6 +28,7 @@ cd OPENWRT_SRC_ROOT
 make menuconfig
 ```
 You can see the qt5 library packages in `Libraries --> Qt5`, the rblibtorrent (libtorrent-rasterbar) package in `Libraries --> rblibtorrent`, and the qBittorrent package in `Network --> BitTorrent --> qBittorrent`.
+* Select package `Libraries --> boost` as `<*> built-in` or `<M> moudle`, otherwise libtorrent-rasterbar will miss dependency on boost-system, and it will fail to build the openwrt images, as the boost-system package will not be built unless boost package has been selected as `<*> built-in` or `<M> moudle`.
 * At last, Build your own openwrt images and packages as usual.
 ## How to use after openwrt start-up:
 * qBittorrent will run automatically after openwrt start-up. The WebUI runs on port `8080` with default username `admin` and password `adminadmin`. You can change username and password on WebUI setting page after login. By default, the WebUI only can be accessed from LAN side. If you want to access the WebUI from WAN side, you must create a rule in firewall for permitting incoming connections to this port from WAN side.
