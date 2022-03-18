@@ -36,4 +36,4 @@ You can see the qt5 library packages in `Libraries --> Qt5`, the rblibtorrent (l
 * Port 8999 is used for incoming connections by default. Of course you can change it on WebUI setting page. In order to reach a higher download speed, it is better to create a rule in firewall for permitting incoming connections to this port from WAN side.
 ## Tested platform:
 * x86 and x64
-<br>Other platforms have not been tested. I am not sure qt5 could function properly on them, as some platforms may need to add additional flags to `QMAKE_CFLAGS` and `QMAKE_CXXFLAGS` in files `qmake.conf`.
+<br>Other platforms have not been tested.
