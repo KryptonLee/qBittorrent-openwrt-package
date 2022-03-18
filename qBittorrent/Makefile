@@ -20,7 +20,7 @@ PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>
 PKG_LICENSE:=GPL-2.0+
 PKG_LICENSE_FILES:=COPYING
 
-PKG_BUILD_DEPENDS:=qt5tools
+PKG_BUILD_DEPENDS:=qt6tools/host
 PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
 PKG_USE_MIPS16:=0
@@ -34,7 +34,7 @@ define Package/qBittorrent
   SUBMENU:=BitTorrent
   TITLE:=BitTorrent Client Programmed in C++ / Qt
   URL:=https://www.qbittorrent.org/
-  DEPENDS:=+libQt5Core +libQt5Network +libQt5Sql +libQt5Xml +libtorrent-rasterbar
+  DEPENDS:=+libQt6Core +libQt6Network +libQt6Sql +libQt6Xml +libtorrent-rasterbar
 endef
 
 define Package/qBittorrent/description
@@ -47,7 +47,10 @@ endef
 
 CMAKE_OPTIONS += \
 	-DGUI=OFF \
-	-DSTACKTRACE=OFF
+	-DSTACKTRACE=OFF \
+	-DQT6=ON \
+	-DVERBOSE_CONFIGURE=ON \
+	-DQT_ADDITIONAL_PACKAGES_PREFIX_PATH=$(STAGING_DIR_HOSTPKG)
 
 define Package/qBittorrent/install
 	$(INSTALL_DIR) $(1)/usr/share/man/man1
@@ -62,3 +65,4 @@ define Package/qBittorrent/install
 endef
 
 $(eval $(call BuildPackage,qBittorrent))
+
