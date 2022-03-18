@@ -8,19 +8,19 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qBittorrent
-PKG_VERSION:=4.4.0
+PKG_VERSION:=4.4.1
 PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/qbittorrent/qBittorrent/tar.gz/release-$(PKG_VERSION)?
-PKG_HASH:=da240744c6cc5953d7c4d298a02a0cf36d2c8897931819f1e6459bd5270a7c5c
+PKG_HASH:=144a609514a7b516e65c4a4e32e49529b5e3949a713daf86332cd95867c991ba
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-release-$(PKG_VERSION)
 
 PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>
 PKG_LICENSE:=GPL-2.0+
 PKG_LICENSE_FILES:=COPYING
 
-PKG_BUILD_DEPENDS:=qt5tools
+PKG_BUILD_DEPENDS:=qt6tools/host
 PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
 PKG_USE_MIPS16:=0
@@ -34,7 +34,7 @@ define Package/qBittorrent
   SUBMENU:=BitTorrent
   TITLE:=BitTorrent Client Programmed in C++ / Qt
   URL:=https://www.qbittorrent.org/
-  DEPENDS:=+libQt5Core +libQt5Network +libQt5Sql +libQt5Xml +rblibtorrent
+  DEPENDS:=+libQt6Core +libQt6Network +libQt6Sql +libQt6Xml +rblibtorrent
 endef
 
 define Package/qBittorrent/description
@@ -47,7 +47,10 @@ endef
 
 CMAKE_OPTIONS += \
 	-DGUI=OFF \
-	-DSTACKTRACE=OFF
+	-DSTACKTRACE=OFF \
+	-DQT6=ON \
+	-DVERBOSE_CONFIGURE=ON \
+	-DQT_ADDITIONAL_PACKAGES_PREFIX_PATH=$(STAGING_DIR_HOSTPKG)
 
 define Package/qBittorrent/install
 	$(INSTALL_DIR) $(1)/usr/share/man/man1
