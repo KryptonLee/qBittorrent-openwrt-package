@@ -41,81 +41,25 @@ define Package/libQt5
   HIDDEN:=1
 endef
 
-define Package/libQt5/config
-	choice
-		prompt "Build Variant"
-		default qt5_variant_release
-		help
-			Choose which Qt5 variant should be built:
-			-> Release: Build Qt with debugging turned off.
-			-> Debug: Build Qt with debugging turned on.
-
-		config qt5_variant_release
-			bool "Release"
-
-		config qt5_variant_debug
-			bool "Debug"
-	endchoice
-
-	config qt5_optimize_size
-		depends on qt5_variant_release
-		bool "Optimize Size"
-		help
-			Optimize release builds for size instead of speed.
-			(Not available in debug variant)
-		default n
-
-	config qt5_optimize_debug
-		depends on qt5_variant_debug
-		bool "Optimize Debug"
-		help
-			Enable debug-friendly optimizations in debug builds.
-			(Not available in release variant)
-		default n
-
-	config qt5_optimized_tools
-		depends on qt5_variant_debug
-		bool "Optimized Tools"
-		help
-			Build optimized host tools even in debug build.
-		default n
-endef
-
-PKG_CONFIG_DEPENDS+= \
-	qt5_variant_release \
-	qt5_variant_debug \
-	qt5_optimize_size \
-	qt5_optimize_debug \
-	qt5_optimized_tools
-
 define Package/libQt5/install
 	true
-endef
-
-define Build/Prepare
-	$(call Build/Prepare/Default)
-	$(INSTALL_DIR) $(PKG_BUILD_DIR)/mkspecs/linux-openwrt-g++
-	$(CP) ./files/qplatformdefs.h $(PKG_BUILD_DIR)/mkspecs/linux-openwrt-g++/qplatformdefs.h
-	$(CP) ./files/qmake.conf $(PKG_BUILD_DIR)/mkspecs/linux-openwrt-g++/qmake.conf
-	$(SED) 's@$$$$(TARGET_CROSS)@$(TARGET_CROSS)@g' $(PKG_BUILD_DIR)/mkspecs/linux-openwrt-g++/qmake.conf
 endef
 
 define Build/Configure
 	(cd $(PKG_BUILD_DIR); \
 		$(CONFIGURE_CMD) \
+		-release \
+		-strip \
 		-prefix /usr \
 		-extprefix $(STAGING_DIR)/usr \
 		-hostprefix $(STAGING_DIR_HOSTPKG) \
-		-xplatform linux-openwrt-g++ \
+		-device linux-generic-g++ \
+		-device-option CROSS_COMPILE="$(TARGET_CROSS)" \
 		-opensource \
 		-confirm-license \
 		-make libs \
 		-shared \
-		$(if $(CONFIG_qt5_variant_release),-release -strip,) \
-		$(if $(CONFIG_qt5_variant_debug),-debug,) \
-		$(if $(CONFIG_qt5_optimize_size),-optimize-size,-no-optimize-size) \
-		$(if $(CONFIG_qt5_optimize_debug),-optimize-debug,-no-optimize-debug) \
-		$(if $(CONFIG_qt5_optimized_tools),-optimized-tools,-no-optimized-tools) \
+		-optimize-size \
 		-system-zlib \
 		-no-zstd \
 		-qt-doubleconversion \
@@ -127,6 +71,7 @@ define Build/Configure
 		$(if $(CONFIG_PACKAGE_libQt5Concurrent),,-no-feature-concurrent) \
 		$(if $(CONFIG_PACKAGE_libQt5DBus),,-no-dbus) \
 		$(if $(CONFIG_PACKAGE_libQt5Gui),-no-opengl -system-freetype,-no-gui -no-freetype) \
+		-no-feature-accessibility \
 		-no-harfbuzz \
 		-no-gif \
 		-no-ico \
@@ -137,20 +82,26 @@ define Build/Configure
 		-no-feature-textodfwriter \
 		-no-libmd4c \
 		-no-feature-textmarkdownwriter \
+		-no-feature-sessionmanager \
+		-no-evdev \
+		-no-linuxfb \
 		$(if $(CONFIG_PACKAGE_libQt5Network),,-no-feature-network) \
 		-openssl-linked \
 		-no-feature-ocsp \
 		$(if $(CONFIG_PACKAGE_libQt5Sql),,-no-feature-sql) \
+		-no-feature-sqlmodel \
 		-qt-sqlite \
 		$(if $(CONFIG_PACKAGE_libQt5Test),,-no-feature-testlib) \
+		-no-feature-itemmodeltester \
 		$(if $(CONFIG_PACKAGE_libQt5Widgets),,-no-widgets) \
 		$(if $(CONFIG_PACKAGE_libQt5Xml),,-no-feature-xml) \
+		$(if $(CONFIG_PACKAGE_qt5-plugin-libqtuiotouchplugin),,-no-feature-tuiotouch) \
 		-v \
 	)
 endef
 
 define Build/Compile
-	$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR)
+	+$(MAKE) $(PKG_JOBS) -C $(PKG_BUILD_DIR)
 endef
 
 define Build/Install
@@ -198,6 +149,7 @@ $(eval $(call DefineQt5Package,Core,,+libpcre2-16))
 $(eval $(call DefineQt5Package,DBus,Core,))
 $(eval $(call DefineQt5Package,Gui,Core,+libfreetype))
 $(eval $(call DefineQt5Package,Network,Core,+libopenssl))
+$(eval $(call DefineQt5Package,PrintSupport,Widgets))
 $(eval $(call DefineQt5Package,Sql,Core,))
 $(eval $(call DefineQt5Package,Test,Core,))
 $(eval $(call DefineQt5Package,Widgets,Gui,))
@@ -205,31 +157,36 @@ $(eval $(call DefineQt5Package,Xml,Core,))
 
 define Package/qt5-plugin/Default/install
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) $(STAGING_DIR)/usr/plugins/$(2)/lib*.so* $(1)/usr/lib/
+	$(CP) $(STAGING_DIR)/usr/plugins/$(2)/libq$(3).so $(1)/usr/lib/
 endef
 
-# 1: plugin name
-# 2: dependencies on other qt5 libraries (short name)
+# 1: plugin diretory
+# 2: plugin name (short name)
+# 3: dependencies on other qt5 libraries (short name)
 define DefineQt5PluginPackage
-  QT5_PLUGINS+=$(1)
+  QT5_PLUGINS+=$(2)
 
-  define Package/qt5-plugin-$(1)
+  define Package/qt5-plugin-libq$(2)
     $(call Package/libQt5/Default)
-    TITLE+=Plugin $(1) Libraries
-    DEPENDS+=$(foreach lib,$(2),+libQt5$(lib))
+    TITLE+=Plugin libq$(2)
+    DEPENDS+=$(foreach lib,$(3),+libQt5$(lib))
   endef
   
-  define Package/qt5-plugin-$(1)/install
-	$(call Package/qt5-plugin/Default/install,$$(1),$(1))
+  define Package/qt5-plugin-libq$(2)/install
+	$(call Package/qt5-plugin/Default/install,$$(1),$(1),$(2))
   endef
 endef
 
-$(eval $(call DefineQt5PluginPackage,bearer,DBus Network))
-$(eval $(call DefineQt5PluginPackage,generic,Gui Network))
-$(eval $(call DefineQt5PluginPackage,platforms,DBus Gui Network))
-$(eval $(call DefineQt5PluginPackage,platformthemes,DBus Gui))
-$(eval $(call DefineQt5PluginPackage,sqldrivers,Sql))
+$(eval $(call DefineQt5PluginPackage,bearer,connmanbearer,DBus Network))
+$(eval $(call DefineQt5PluginPackage,bearer,genericbearer,Network))
+$(eval $(call DefineQt5PluginPackage,bearer,nmbearer,DBus Network))
+$(eval $(call DefineQt5PluginPackage,generic,tuiotouchplugin,Gui Network))
+$(eval $(call DefineQt5PluginPackage,platforms,minimal,Gui))
+$(eval $(call DefineQt5PluginPackage,platforms,offscreen,Gui))
+$(eval $(call DefineQt5PluginPackage,platformthemes,xdgdesktopportal,DBus Gui))
+$(eval $(call DefineQt5PluginPackage,sqldrivers,sqlite,Sql))
+PKG_CONFIG_DEPENDS+=qt5-plugin-libqtuiotouchplugin
 
 $(foreach lib,$(QT5BASE_LIBS),$(eval $(call BuildPackage,libQt5$(lib))))
-$(foreach lib,$(QT5_PLUGINS),$(eval $(call BuildPackage,qt5-plugin-$(lib))))
+$(foreach lib,$(QT5_PLUGINS),$(eval $(call BuildPackage,qt5-plugin-libq$(lib))))
 $(eval $(call BuildPackage,libQt5))
