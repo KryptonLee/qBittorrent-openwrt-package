@@ -189,15 +189,6 @@ define DefineQt6Package
 
   define Package/libQt6$(1)/description
 This package provides the Qt6 $(1) v$(PKG_VERSION) library.
-
------------------------------------------------------------------------------
-|                                Warning                                    |
-| In order to build the Qt6 Libraries, it is necessary to make sure your    |
-| host system satisfies the requirements below:                             |
-| - Perl 5.8 or later                                                       |
-| - Python 2.7 or later                                                     |
-| - C++ compiler supporting the C++11 standard                              |
------------------------------------------------------------------------------
   endef
 
   define Package/libQt6$(1)/install
