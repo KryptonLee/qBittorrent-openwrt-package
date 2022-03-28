@@ -30,6 +30,8 @@ PKG_USE_MIPS16:=0
 
 CMAKE_INSTALL:=1
 
+STRIP:=$(TARGET_CROSS)strip $(call qstrip,$(CONFIG_STRIP_ARGS))
+
 include $(INCLUDE_DIR)/host-build.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
@@ -59,8 +61,9 @@ ifdef CONFIG_USE_GLIBC
 endif
 
 CMAKE_HOST_OPTIONS += \
+	-DQT_FORCE_MIN_CMAKE_VERSION_FOR_BUILDING_QT=3.19 \
 	-DBUILD_SHARED_LIBS=OFF \
-	-DFEATURE_optimize_size=ON \
+	-DFEATURE_optimize_full=ON \
 	-DFEATURE_zstd=OFF \
 	-DFEATURE_concurrent=OFF \
 	-DFEATURE_dbus=ON \
@@ -106,7 +109,7 @@ define Build/Configure
 			-DCMAKE_FIND_USE_PACKAGE_REGISTRY=FALSE \
 			-DCMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY=FALSE \
 			$(CMAKE_OPTIONS) \
-			-DCMAKE_INSTALL_PREFIX=/usr \
+			-DINSTALL_PLUGINSDIR=/usr/lib/qt6plugins \
 			-DCMAKE_SYSROOT=$(STAGING_DIR) \
 			-DQT_HOST_PATH=$(STAGING_DIR_HOSTPKG) \
 			-DQT_QMAKE_TARGET_MKSPEC=devices/linux-generic-g++ \
@@ -114,7 +117,7 @@ define Build/Configure
 			-DQT_BUILD_TESTS=OFF \
 			-DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=OFF \
 			-DBUILD_SHARED_LIBS=ON \
-			-DFEATURE_optimize_size=ON \
+			-DFEATURE_optimize_full=ON \
 			-DFEATURE_system_zlib=ON \
 			-DFEATURE_zstd=OFF \
 			-DFEATURE_backtrace=OFF \
@@ -207,8 +210,8 @@ $(eval $(call DefineQt6Package,Widgets,Gui,))
 $(eval $(call DefineQt6Package,Xml,Core,))
 
 define Package/qt6-plugin/Default/install
-	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) $(PKG_INSTALL_DIR)/usr/plugins/$(2)/libq$(3).so $(1)/usr/lib/
+	$(INSTALL_DIR) $(1)/usr/lib/qt6plugins/$(2)/
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/qt6plugins/$(2)/libq$(3).so $(1)/usr/lib/qt6plugins/$(2)/
 endef
 
 # 1: plugin diretory

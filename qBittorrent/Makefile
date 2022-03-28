@@ -34,7 +34,7 @@ define Package/qBittorrent
   SUBMENU:=BitTorrent
   TITLE:=BitTorrent Client Programmed in C++ / Qt
   URL:=https://www.qbittorrent.org/
-  DEPENDS:=+libQt6Core +libQt6Network +libQt6Sql +libQt6Xml +rblibtorrent
+  DEPENDS:=+libQt6Core +libQt6Network +libQt6Sql +libQt6Xml +rblibtorrent +qt6-plugin-libqopensslbackend +qt6-plugin-libqsqlite
 endef
 
 define Package/qBittorrent/description
@@ -65,3 +65,4 @@ define Package/qBittorrent/install
 endef
 
 $(eval $(call BuildPackage,qBittorrent))
+
