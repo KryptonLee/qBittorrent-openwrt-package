@@ -9,11 +9,11 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qt6base
 PKG_BASE_VERSION:=6.2
-PKG_SUBVERSION:=3
+PKG_SUBVERSION:=4
 PKG_VERSION:=$(PKG_BASE_VERSION).$(PKG_SUBVERSION)
 PKG_RELEASE:=0
 
-PKG_MD5SUM:=eba97e9e29f811a2da2784c18f65a9d6
+PKG_MD5SUM:=1a962f1105fea5650cdff57fff64509f
 PKG_SOURCE:=qtbase-everywhere-src-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://download.qt-project.org/archive/qt/$(PKG_BASE_VERSION)/$(PKG_VERSION)/submodules
 
@@ -29,6 +29,8 @@ PKG_BUILD_PARALLEL:=1
 PKG_USE_MIPS16:=0
 
 CMAKE_INSTALL:=1
+
+STRIP:=$(TARGET_CROSS)strip $(call qstrip,$(CONFIG_STRIP_ARGS))
 
 include $(INCLUDE_DIR)/host-build.mk
 include $(INCLUDE_DIR)/package.mk
@@ -60,7 +62,7 @@ endif
 
 CMAKE_HOST_OPTIONS += \
 	-DBUILD_SHARED_LIBS=OFF \
-	-DFEATURE_optimize_size=ON \
+	-DFEATURE_optimize_full=ON \
 	-DFEATURE_zstd=OFF \
 	-DFEATURE_concurrent=OFF \
 	-DFEATURE_dbus=ON \
@@ -106,7 +108,7 @@ define Build/Configure
 			-DCMAKE_FIND_USE_PACKAGE_REGISTRY=FALSE \
 			-DCMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY=FALSE \
 			$(CMAKE_OPTIONS) \
-			-DCMAKE_INSTALL_PREFIX=/usr \
+			-DINSTALL_PLUGINSDIR=/usr/lib/qt6plugins \
 			-DCMAKE_SYSROOT=$(STAGING_DIR) \
 			-DQT_HOST_PATH=$(STAGING_DIR_HOSTPKG) \
 			-DQT_QMAKE_TARGET_MKSPEC=devices/linux-generic-g++ \
@@ -114,7 +116,7 @@ define Build/Configure
 			-DQT_BUILD_TESTS=OFF \
 			-DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=OFF \
 			-DBUILD_SHARED_LIBS=ON \
-			-DFEATURE_optimize_size=ON \
+			-DFEATURE_optimize_full=ON \
 			-DFEATURE_system_zlib=ON \
 			-DFEATURE_zstd=OFF \
 			-DFEATURE_backtrace=OFF \
@@ -207,8 +209,8 @@ $(eval $(call DefineQt6Package,Widgets,Gui,))
 $(eval $(call DefineQt6Package,Xml,Core,))
 
 define Package/qt6-plugin/Default/install
-	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) $(PKG_INSTALL_DIR)/usr/plugins/$(2)/libq$(3).so $(1)/usr/lib/
+	$(INSTALL_DIR) $(1)/usr/lib/qt6plugins/$(2)/
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/qt6plugins/$(2)/libq$(3).so $(1)/usr/lib/qt6plugins/$(2)/
 endef
 
 # 1: plugin diretory
