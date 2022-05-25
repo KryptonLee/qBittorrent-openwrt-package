@@ -9,12 +9,12 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qt5base
 PKG_BASE_VERSION:=5.15
-PKG_SUBVERSION:=2
+PKG_SUBVERSION:=4
 PKG_VERSION:=$(PKG_BASE_VERSION).$(PKG_SUBVERSION)
 PKG_RELEASE:=1
 
-PKG_MD5SUM:=0eb522ff6c2194f9690cbdcd5b33e803
-PKG_SOURCE:=qtbase-everywhere-src-$(PKG_VERSION).tar.xz
+PKG_MD5SUM:=91d827e83a45a302bfa2f32bbc2090fb
+PKG_SOURCE:=qtbase-everywhere-opensource-src-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://download.qt-project.org/archive/qt/$(PKG_BASE_VERSION)/$(PKG_VERSION)/submodules
 PKG_BUILD_DIR:=$(BUILD_DIR)/qtbase-everywhere-src-$(PKG_VERSION)
 

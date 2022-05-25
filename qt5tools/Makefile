@@ -9,12 +9,12 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qt5tools
 PKG_BASE_VERSION:=5.15
-PKG_SUBVERSION:=2
+PKG_SUBVERSION:=4
 PKG_VERSION:=$(PKG_BASE_VERSION).$(PKG_SUBVERSION)
 PKG_RELEASE:=1
 
-PKG_MD5SUM:=739403634e1326a3d52902a835015a4b
-PKG_SOURCE:=qttools-everywhere-src-$(PKG_VERSION).tar.xz
+PKG_MD5SUM:=2466004ad9aad55f3416aadc370f8504
+PKG_SOURCE:=qttools-everywhere-opensource-src-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://download.qt-project.org/archive/qt/$(PKG_BASE_VERSION)/$(PKG_VERSION)/submodules
 PKG_BUILD_DIR:=$(BUILD_DIR)/qttools-everywhere-src-$(PKG_VERSION)
 
