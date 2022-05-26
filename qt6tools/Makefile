@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qt6tools
-PKG_BASE_VERSION:=6.2
-PKG_SUBVERSION:=4
+PKG_BASE_VERSION:=6.3
+PKG_SUBVERSION:=0
 PKG_VERSION:=$(PKG_BASE_VERSION).$(PKG_SUBVERSION)
 PKG_RELEASE:=0
 
-PKG_MD5SUM:=17797d64a1c049bb5dfd919ba9203ffa
+PKG_MD5SUM:=458df115bbbbc29f16ffab8035e9efcb
 PKG_SOURCE:=qttools-everywhere-src-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://download.qt-project.org/archive/qt/$(PKG_BASE_VERSION)/$(PKG_VERSION)/submodules
 HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/qttools-everywhere-src-$(PKG_VERSION)
@@ -44,14 +44,12 @@ HOST_CONFIGURE_ARGS := \
         -no-feature-designer \
         -no-feature-distancefieldgenerator \
         -no-feature-kmap2qmap \
-        -no-feature-macdeployqt \
         -no-feature-pixeltool \
         -no-feature-qdbus \
         -no-feature-qev \
         -no-feature-qtattributionsscanner \
         -no-feature-qtplugininfo \
-        -no-feature-qtdiag \
-        -no-feature-windeployqt
+        -no-feature-qtdiag
 
 define Host/Configure
 	(cd $(HOST_BUILD_DIR); \

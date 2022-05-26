@@ -8,12 +8,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rblibtorrent
-PKG_VERSION:=2.0.5
+PKG_VERSION:=2.0.6
 PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/arvidn/libtorrent/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=8879d233d81b9bc1b02fdac35f6e1f69509c74da9818c6a819d18b5e42983f56
+PKG_HASH:=75b17d9db3adf0da5896edeaff4db3879f38ee66be953dc9567089db83a070be
 PKG_BUILD_DIR:=$(BUILD_DIR)/libtorrent-$(PKG_VERSION)
 
 PKG_MAINTAINER:=Krypton Lee <jun.k.lee199410@outlook.com>
@@ -42,7 +42,7 @@ all the other bittorrent implementations around. It is a library and not a
 full featured client, although it comes with a working example client.
 endef
 
-TRY_SIGNAL_VERSION:=334fd139e2bb387017b42d36753a03935e3bca75
+TRY_SIGNAL_VERSION:=751a7e5a5be14892bcfdff1e63c653bcbf71cf39
 TRY_SIGNAL_FILE:=$(PKG_NAME)-try_signal-$(TRY_SIGNAL_VERSION).tar.xz
 define Download/try_signal
 	VERSION:=$(TRY_SIGNAL_VERSION)
