@@ -52,6 +52,10 @@ CMAKE_OPTIONS += \
 	-DVERBOSE_CONFIGURE=ON \
 	-DQT_ADDITIONAL_PACKAGES_PREFIX_PATH=$(STAGING_DIR_HOSTPKG)
 
+define Package/$(PKG_NAME)/conffiles
+/root/.config/qBittorrent
+endef
+
 define Package/qBittorrent/install
 	$(INSTALL_DIR) $(1)/usr/share/man/man1
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/share/man/man1/qbittorrent-nox.1 $(1)/usr/share/man/man1/qbittorrent-nox.1
@@ -59,8 +63,8 @@ define Package/qBittorrent/install
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/qbittorrent-nox $(1)/usr/bin
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/qbittorrent $(1)/etc/init.d
-	$(INSTALL_DIR) $(1)/.config/qBittorrent
-	$(CP) ./files/qBittorrent.conf $(1)/.config/qBittorrent
+	$(INSTALL_DIR) $(1)/root/.config/qBittorrent/config
+	$(CP) ./files/qBittorrent.conf $(1)/root/.config/qBittorrent/config/
 	$(INSTALL_DIR) $(1)/root/Downloads
 endef
 
