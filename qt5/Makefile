@@ -14,6 +14,7 @@ PKG_RELEASE:=0
 
 PKG_MD5SUM:=e1447db4f06c841d8947f0a6ce83a7b5
 PKG_SOURCE:=qt-everywhere-src-$(PKG_VERSION).$(PKG_SUBVERSION).tar.xz
+#PKG_SOURCE_URL:=file:///home/dmitry/openwrt
 PKG_SOURCE_URL:=http://download.qt-project.org/archive/qt/$(PKG_VERSION)/$(PKG_VERSION).$(PKG_SUBVERSION)/single
 PKG_BUILD_DIR=$(BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_SUBVERSION)
 

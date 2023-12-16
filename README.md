@@ -86,3 +86,6 @@ to:
 After run qBittorrent will appear on 8080 port. login:admin password:adminadmin.
 
 
+## Trouble with QT5
+
+If You cann't compile qbittrorrent because cann't get QT. Just download qt-everywhere-src-5.15.2.tar.xz [from here](https://cloud.mail.ru/public/vgHx/yocdXaadZ) And then change PKG_SOURCE_URL in Makefile PKG_SOURCE_URL:=file:///"absolut path of qt-everywhere-src-5.15.2.tar.xz"
